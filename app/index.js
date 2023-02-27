@@ -20,12 +20,16 @@ const uuidv4 = () => {
   });
 };
 const user_id = uuidv4();
+const names = ["test1", "test2", "test3"];
+const name = names[Math.floor(Math.random() * names.length)];
+const ages = [20, 30, 40];
+const age = ages[Math.floor(Math.random() * ages.length)];
 const params_insert = {
   TableName: table_name,
   Item: {
     user_id: { S: user_id },
-    name: { S: "test" },
-    age: { N: "20" },
+    name: { S: name },
+    age: { N: age.toString() },
   },
 };
 
