@@ -1,0 +1,15 @@
+{
+  "name": "learning-dynamodb",
+  "version": "1.0.0",
+  "description": "DynamoDBの学習目的プログラム。",
+  "author": "osawa-koki",
+  "license": "Apache-2.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1323.0"
+  }
+}
