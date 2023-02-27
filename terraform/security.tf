@@ -1,6 +1,7 @@
 
 resource "aws_security_group" "my-table-sg" {
   name_prefix = "${var.project_name}-dynamodb-sg"
+  vpc_id = aws_vpc.my_vpc.id
 
   ingress {
     from_port   = 0
