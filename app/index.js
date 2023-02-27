@@ -11,7 +11,6 @@ client.listTables({}, (err, data) => {
 
 const table_name = "learning-dynamodb-dynamodb";
 
-// データの挿入
 const uuidv4 = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0,
@@ -19,10 +18,12 @@ const uuidv4 = () => {
     return v.toString(16);
   });
 };
-const user_id = uuidv4();
 const names = ["test1", "test2", "test3"];
-const name = names[Math.floor(Math.random() * names.length)];
 const ages = [20, 30, 40];
+
+// データの挿入
+const user_id = uuidv4();
+const name = names[Math.floor(Math.random() * names.length)];
 const age = ages[Math.floor(Math.random() * ages.length)];
 const params_insert = {
   TableName: table_name,
