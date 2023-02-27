@@ -36,3 +36,7 @@ DynamoDBのアクセス制御はアクセスキーとシークレットキーに
 
 間違ってもアクセスキーとシークレットキーをGitHubに上げてしまわないように注意してください。  
 原則として環境変数を使用するため、間違って漏洩することはありませんが、それでも細心の注意を払ってください。  
+
+## DynamoDB用のNoSQL Workbenchのダウンロード
+
+<https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/workbench.settingup.html>  
