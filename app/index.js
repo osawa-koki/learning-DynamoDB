@@ -38,3 +38,16 @@ client.putItem(params_insert, (err, data) => {
   if (err) console.log(err, err.stack);
   else console.log(data);
 });
+
+// データを全て取得
+const params_scan = {
+  TableName: table_name,
+};
+client.scan(params_scan, (err, data) => {
+  if (err) console.log(err, err.stack);
+  else {
+    data.Items.forEach((item) => {
+      console.log(item);
+    });
+  };
+});
