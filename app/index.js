@@ -75,6 +75,3 @@ client.scan(params_condition, (err, data) => {
     });
   }
 });
-
-// 実行する
-
