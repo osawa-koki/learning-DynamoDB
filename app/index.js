@@ -46,8 +46,35 @@ const params_scan = {
 client.scan(params_scan, (err, data) => {
   if (err) console.log(err, err.stack);
   else {
+    console.log("----- ----- ----- full scan ----- ----- -----");
     data.Items.forEach((item) => {
       console.log(item);
     });
   };
 });
+
+// `name`が`test1`のデータを取得
+const params_condition = {
+  TableName: table_name,
+  FilterExpression: '#n = :value',
+  ExpressionAttributeNames: {
+    '#n': 'name',
+  },
+  ExpressionAttributeValues: {
+    ':value': { S: "test1" },
+  },
+};
+console.log('params_condition:', params_condition);
+client.scan(params_condition, (err, data) => {
+  if (err) {
+    console.error('Error scanning table: ', err);
+  } else {
+    console.log("----- ----- ----- condition scan ----- ----- -----");
+    data.Items.forEach((item) => {
+      console.log(item);
+    });
+  }
+});
+
+// 実行する
+
