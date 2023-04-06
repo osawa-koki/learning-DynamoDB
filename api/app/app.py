@@ -36,7 +36,7 @@ def get(event, context):
         "statusCode": 200,
         "body": json.dumps(
             {
-                "message": ret,
+                "message": ret["Item"],
             }
         ),
     }
