@@ -12,32 +12,6 @@ Globals:
     MemorySize: 128
 
 Resources:
-  # MyLambdaRole:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     RoleName: !Sub ${AWS::StackName}-lambda-role
-  #     AssumeRolePolicyDocument:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal:
-  #             Service: lambda.amazonaws.com
-  #           Action: sts:AssumeRole
-  #     Policies:
-  #       - PolicyName: !Sub ${AWS::StackName}-policy
-  #         PolicyDocument:
-  #           Version: '2012-10-17'
-  #           Statement:
-  #             - Sid: AllowDynamoDBTable
-  #               Effect: Allow
-  #               Action:
-  #                 - dynamodb:GetItem
-  #                 - dynamodb:PutItem
-  #                 - dynamodb:UpdateItem
-  #                 - dynamodb:DeleteItem
-  #                 - dynamodb:Query
-  #                 - dynamodb:Scan
-  #               Resource: !GetAtt MyDynamoDBTable.Arn
   MyDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -54,7 +28,6 @@ Resources:
     Properties:
       FunctionName: !Sub ${AWS::StackName}-ping
       PackageType: Image
-      # Role: !GetAtt MyLambdaRole.Arn
       ImageConfig:
         Command: [ "app.ping" ]
       Architectures:
