@@ -1,12 +1,23 @@
 import json
 import logging
+import uuid
 import boto3
+from decimal import Decimal
+from boto3.dynamodb.types import TypeSerializer, TypeDeserializer
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 dynamodb = boto3.client('dynamodb')
 table_name = 'learning-dynamodb-dynamodb-table'
+
+serializer = TypeSerializer()
+deserializer = TypeDeserializer()
+
+def decimal_default_proc(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
 
 def ping(event, context):
     return {
@@ -32,11 +43,59 @@ def get(event, context):
     }
     ret = dynamodb.get_item(**options)
 
+    if 'Item' not in ret:
+        return {
+            "statusCode": 404,
+            "body": json.dumps(
+                {
+                    "message": "Not Found",
+                }
+            ),
+        }
+
+    item_python_dict = {
+        k: deserializer.deserialize(v)
+        for k, v in ret['Item'].items()
+    }
+
     return {
         "statusCode": 200,
-        "body": json.dumps(
-            {
-                "message": ret["Item"],
-            }
-        ),
+        "body": json.dumps(item_python_dict, default=decimal_default_proc),
+    }
+
+def post(event, context):
+
+    # ボディ部をパース
+    body = json.loads(event['body'])
+
+    if body is None:
+        return {
+            "statusCode": 400,
+            "body": json.dumps(
+                {
+                    "message": "Bad Request",
+                }
+            , default=decimal_default_proc),
+        }
+
+    # GUIDを生成
+    channel_id = str(uuid.uuid4())
+
+    body['channel_id'] = channel_id
+
+    # Bodyの値をDynamoDBの型に変換
+    item_dynamodb_json = {
+        k: serializer.serialize(v)
+        for k, v in body.items()
+    }
+
+    options = {
+        'TableName': table_name,
+        'Item': item_dynamodb_json,
+    }
+    dynamodb.put_item(**options)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(body),
     }
