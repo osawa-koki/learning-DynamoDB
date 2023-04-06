@@ -38,7 +38,7 @@ Resources:
                   - dynamodb:Query
                   - dynamodb:Scan
                 Resource: !GetAtt MyDynamoDBTable.Arn
-  MyTable:
+  MyDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
