@@ -12,7 +12,7 @@ Globals:
     MemorySize: 128
 
 Resources:
-  MyDynamoDBTable:
+  MyTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
