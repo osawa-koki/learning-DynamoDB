@@ -82,7 +82,7 @@ Resources:
         MyApiGateway:
           Type: Api
           Properties:
-            Path: /
+            Path: /{channel_id}
             Method: get
     Metadata:
       Dockerfile: Dockerfile
