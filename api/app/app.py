@@ -66,7 +66,7 @@ def get(event, context):
 def post(event, context):
 
     # ボディ部をパース
-    body = json.loads(event['body'])
+    body = json.loads(event['body'], parse_float=Decimal)
 
     if body is None:
         return {
@@ -98,4 +98,40 @@ def post(event, context):
     return {
         "statusCode": 200,
         "body": json.dumps(body),
+    }
+
+def put(event, context):
+
+    channel_id = event['pathParameters']['channel_id']
+
+    # ボディ部をパース
+    body = json.loads(event['body'], parse_float=Decimal)
+
+    if body is None:
+        return {
+            "statusCode": 400,
+            "body": json.dumps(
+                {
+                    "message": "Bad Request",
+                }
+            , default=decimal_default_proc),
+        }
+
+    body['channel_id'] = channel_id
+
+    # Bodyの値をDynamoDBの型に変換
+    item_dynamodb_json = {
+        k: serializer.serialize(v)
+        for k, v in body.items()
+    }
+
+    options = {
+        'TableName': table_name,
+        'Item': item_dynamodb_json,
+    }
+    dynamodb.put_item(**options)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(body, default=decimal_default_proc),
     }
