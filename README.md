@@ -2,6 +2,8 @@
 
 🍞🍞🍞 Dynamo DBの学習用リポジトリです。  
 
+![成果物](./docs/img/fruit.gif)  
+
 ## 準備
 
 以下のGitHub Secretsを設定します。  
@@ -18,3 +20,14 @@
 cd ./api
 sam build --use-container ;; sam local start-api
 ```
+
+## 実行する
+
+以下のパスにアクセスします。  
+
+- /{channel_id} (GET)
+- /             (POST)
+- /{channel_id} (PUT)
+- /{channel_id} (DELETE)
+
+`POST`と`PUT`はボディ部に適当なJSONをセットして送信してください。  
