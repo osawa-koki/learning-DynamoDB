@@ -135,3 +135,24 @@ def put(event, context):
         "statusCode": 200,
         "body": json.dumps(body, default=decimal_default_proc),
     }
+
+def delete(event, context):
+
+    channel_id = event['pathParameters']['channel_id']
+
+    options = {
+        'TableName': table_name,
+        'Key': {
+            'channel_id': {'S': channel_id}
+        }
+    }
+    dynamodb.delete_item(**options)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(
+            {
+                "message": "Deleted",
+            }
+        , default=decimal_default_proc),
+    }

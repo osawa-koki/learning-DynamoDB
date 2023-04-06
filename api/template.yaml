@@ -128,6 +128,26 @@ Resources:
       Dockerfile: Dockerfile
       DockerContext: ./app
       DockerTag: python3.9-v1
+  DeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-delete
+      PackageType: Image
+      Role: !GetAtt MyLambdaRole.Arn
+      ImageConfig:
+        Command: [ "app.delete" ]
+      Architectures:
+        - x86_64
+      Events:
+        MyApiGateway:
+          Type: Api
+          Properties:
+            Path: /{channel_id}
+            Method: delete
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.9-v1
 
 Outputs:
   MyApiGateway:
