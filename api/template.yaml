@@ -77,6 +77,6 @@ Outputs:
   PingFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt PingFunction.Arn
-  PingFunctionIamRole:
+  MyLambdaRole:
     Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt PingFunctionRole.Arn
+    Value: !GetAtt MyLambdaRole.Arn
