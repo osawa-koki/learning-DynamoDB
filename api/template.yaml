@@ -123,7 +123,7 @@ Resources:
           Type: Api
           Properties:
             Path: /{channel_id}
-            Method: put, patch
+            Method: put
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: ./app
