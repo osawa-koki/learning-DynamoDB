@@ -54,7 +54,6 @@ Resources:
     Properties:
       FunctionName: !Sub ${AWS::StackName}-ping
       PackageType: Image
-      Role: !GetAtt MyLambdaRole.Arn
       ImageConfig:
         Command: [ "app.ping" ]
       Architectures:
@@ -64,6 +63,26 @@ Resources:
           Type: Api
           Properties:
             Path: /ping
+            Method: get
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.9-v1
+  GetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-get
+      PackageType: Image
+      Role: !GetAtt MyLambdaRole.Arn
+      ImageConfig:
+        Command: [ "app.get" ]
+      Architectures:
+        - x86_64
+      Events:
+        MyApiGateway:
+          Type: Api
+          Properties:
+            Path: /
             Method: get
     Metadata:
       Dockerfile: Dockerfile
